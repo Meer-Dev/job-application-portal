@@ -1,5 +1,7 @@
 🎯 Job Application Portal (Full-Stack)
 
+SCREENSHOT ; (https://ibb.co/hJM54P2t)
+
 A comprehensive job application management system built with ASP.NET Core, Angular, Entity Framework Core, SQL Server, and Hangfire, following ABP (ASP.NET Boilerplate) architecture.
 
 ✨ Features
@@ -225,6 +227,8 @@ MIT License – free for personal & commercial use.
 💬 Support
 
 ✅ Check Troubleshooting
+
+
 
 ✅ Inspect Swagger endpoints
 
