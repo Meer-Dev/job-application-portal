@@ -63,6 +63,17 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 'fas fa-users',
                 'Pages.Users'
             ),
+            // ADD YOUR NEW MENU ITEMS HERE (without permissions for now)
+            new MenuItem(
+                'Job Positions',
+                '/app/job-positions',
+                'fas fa-briefcase'
+            ),
+            new MenuItem(
+                'Candidates',
+                '/app/candidates',
+                'fas fa-user-tie'
+            ),
             new MenuItem(this.l('MultiLevelMenu'), '', 'fas fa-circle', '', [
                 new MenuItem('ASP.NET Boilerplate', '', 'fas fa-dot-circle', '', [
                     new MenuItem(
@@ -129,6 +140,20 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
             if (item.children) {
                 this.patchMenuItems(item.children, item.id);
             }
+            
+            // ADD GETTER PROPERTIES FOR TEMPLATE COMPATIBILITY
+            // This makes 'name' point to 'label' and 'items' point to 'children'
+            Object.defineProperty(item, 'name', {
+                get: function() { return this.label; },
+                enumerable: true,
+                configurable: true
+            });
+            
+            Object.defineProperty(item, 'items', {
+                get: function() { return this.children; },
+                enumerable: true,
+                configurable: true
+            });
         });
     }
 

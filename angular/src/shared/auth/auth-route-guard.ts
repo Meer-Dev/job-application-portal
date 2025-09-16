@@ -9,7 +9,7 @@ import {
   CanActivateChild,
 } from '@angular/router';
 
-@Injectable()
+@Injectable({ providedIn: 'root' }) // <-- IMPORTANT: provide the guard
 export class AppRouteGuard implements CanActivate, CanActivateChild {
   private triedInitOnce = false;
 
@@ -28,7 +28,7 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
       try {
         await this._sessionService.init();
       } catch {
-        // ignore
+        // ignore init error; we'll fall back to login redirect below
       }
     }
 
@@ -37,10 +37,12 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
       return false;
     }
 
+    // no permission specified => allow
     if (!route.data || !route.data['permission']) {
       return true;
     }
 
+    // permission specified => check
     if (this._permissionChecker.isGranted(route.data['permission'])) {
       return true;
     }
@@ -61,8 +63,9 @@ export class AppRouteGuard implements CanActivate, CanActivateChild {
       return '/account/login';
     }
 
+    // Make sure this matches your actual route path
     if (this._permissionChecker.isGranted('Pages.Users')) {
-      return '/app/admin/users';
+      return '/app/users';
     }
 
     return '/app/home';

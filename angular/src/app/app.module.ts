@@ -1,42 +1,41 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientJsonpModule } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxPaginationModule } from 'ngx-pagination';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module';
 import { SharedModule } from '@shared/shared.module';
+
 import { HomeComponent } from '@app/home/home.component';
 import { AboutComponent } from '@app/about/about.component';
-import { JobPositionsComponent } from '@app/job-positions/job-positions.component';
-import { CreateJobPositionDialogComponent } from '@app/job-positions/create-job-position/create-job-position-dialog.component';
-import { EditJobPositionDialogComponent } from '@app/job-positions/edit-job-position/edit-job-position-dialog.component';
 
-import { CandidatesComponent } from '@app/candidates/candidates.component';
-import { CreateCandidateDialogComponent } from '@app/candidates/create-candidate/create-candidate-dialog.component';
-import { EditCandidateDialogComponent } from '@app/candidates/edit-candidate/edit-candidate-dialog.component';
-
-// tenants
+// Tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
 import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
 import { EditTenantDialogComponent } from './tenants/edit-tenant/edit-tenant-dialog.component';
-// roles
+
+// Roles
 import { RolesComponent } from '@app/roles/roles.component';
 import { CreateRoleDialogComponent } from './roles/create-role/create-role-dialog.component';
 import { EditRoleDialogComponent } from './roles/edit-role/edit-role-dialog.component';
-// users
+
+// Users
 import { UsersComponent } from '@app/users/users.component';
 import { CreateUserDialogComponent } from '@app/users/create-user/create-user-dialog.component';
 import { EditUserDialogComponent } from '@app/users/edit-user/edit-user-dialog.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { ResetPasswordDialogComponent } from './users/reset-password/reset-password.component';
-// layout
+
+// Layout
 import { HeaderComponent } from './layout/header.component';
 import { HeaderLeftNavbarComponent } from './layout/header-left-navbar.component';
 import { HeaderLanguageMenuComponent } from './layout/header-language-menu.component';
@@ -47,28 +46,40 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 
+// Job positions
+import { JobPositionsComponent } from '@app/job-positions/job-positions.component';
+import { CreateJobPositionDialogComponent } from '@app/job-positions/create-job-position/create-job-position-dialog.component';
+import { EditJobPositionDialogComponent } from '@app/job-positions/edit-job-position/edit-job-position-dialog.component';
 
+// Candidates
+import { CandidatesComponent } from '@app/candidates/candidates.component';
+import { CreateCandidateDialogComponent } from '@app/candidates/create-candidate/create-candidate-dialog.component';
+import { EditCandidateDialogComponent } from '@app/candidates/edit-candidate/edit-candidate-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AboutComponent,
-    // tenants
+
+    // Tenants
     TenantsComponent,
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
-    // roles
+
+    // Roles
     RolesComponent,
     CreateRoleDialogComponent,
     EditRoleDialogComponent,
-    // users
+
+    // Users
     UsersComponent,
     CreateUserDialogComponent,
     EditUserDialogComponent,
     ChangePasswordComponent,
     ResetPasswordDialogComponent,
-    // layout
+
+    // Layout
     HeaderComponent,
     HeaderLeftNavbarComponent,
     HeaderLanguageMenuComponent,
@@ -78,19 +89,19 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
     SidebarLogoComponent,
     SidebarUserPanelComponent,
     SidebarMenuComponent,
-    // job positions
+
+    // Job positions
     JobPositionsComponent,
     CreateJobPositionDialogComponent,
     EditJobPositionDialogComponent,
-    
-    // candidates
+
+    // Candidates
     CandidatesComponent,
     CreateCandidateDialogComponent,
     EditCandidateDialogComponent,
   ],
   imports: [
     CommonModule,
-    NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -99,29 +110,31 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
     BsDropdownModule,
     CollapseModule,
     TabsModule,
-    AppRoutingModule,
-    SharedModule,
-    ServiceProxyModule,
-    SharedModule,
     NgxPaginationModule,
+    SharedModule,
+    ServiceProxyModule, // registers all generated proxies (incl. JobPosition/Candidate)
+    AppRoutingModule,   // keep routing last if you like, but order isn’t critical here
   ],
   providers: [],
   entryComponents: [
-    // tenants
+    // Tenants
     CreateTenantDialogComponent,
     EditTenantDialogComponent,
-    // roles
+
+    // Roles
     CreateRoleDialogComponent,
     EditRoleDialogComponent,
-    // users
+
+    // Users
     CreateUserDialogComponent,
     EditUserDialogComponent,
     ResetPasswordDialogComponent,
-    // job positions
+
+    // Job positions
     CreateJobPositionDialogComponent,
     EditJobPositionDialogComponent,
-    
-    // candidates
+
+    // Candidates
     CreateCandidateDialogComponent,
     EditCandidateDialogComponent,
   ],
