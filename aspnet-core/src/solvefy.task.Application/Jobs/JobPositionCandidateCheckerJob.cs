@@ -3,40 +3,56 @@ using System.Linq;
 using Abp.BackgroundJobs;
 using Abp.Dependency;
 using Abp.Domain.Repositories;
-using Abp.Logging;
+using Abp.Domain.Uow;
+
+// ✅ alias the entity classes explicitly
+using JobPositionEntity = solvefy.task.Entities.JobPosition;
+using CandidateEntity = solvefy.task.Entities.Candidate;
 
 namespace solvefy.task.Jobs
 {
     public class JobPositionCandidateCheckerJob : BackgroundJob<object>, ITransientDependency
     {
-        private readonly IRepository<Entities.JobPosition, int> _jobPositionRepository;
-        private readonly IRepository<Entities.Candidate, int> _candidateRepository;
+        private readonly IRepository<JobPositionEntity, int> _jobPositionRepository;
+        private readonly IRepository<CandidateEntity, int> _candidateRepository;
 
         public JobPositionCandidateCheckerJob(
-            IRepository<Entities.JobPosition, int> jobPositionRepository,
-            IRepository<Entities.Candidate, int> candidateRepository)
+            IRepository<JobPositionEntity, int> jobPositionRepository,
+            IRepository<CandidateEntity, int> candidateRepository)
         {
             _jobPositionRepository = jobPositionRepository;
             _candidateRepository = candidateRepository;
         }
 
+        [UnitOfWork]
         public override void Execute(object args)
         {
-            var sevenDaysAgo = DateTime.Now.AddDays(-7);
-            var activeJobPositions = _jobPositionRepository.GetAll()
-                .Where(jp => jp.IsActive)
-                .ToList();
-
-            foreach (var jobPosition in activeJobPositions)
+            try
             {
-                var candidateCount = _candidateRepository.Count(c =>
-                    c.JobPositionId == jobPosition.Id &&
-                    c.CreationTime >= sevenDaysAgo);
+                var sevenDaysAgo = DateTime.Now.AddDays(-7);
+                var activeJobPositions = _jobPositionRepository.GetAll()
+                    .Where(jp => jp.IsActive)
+                    .ToList();
 
-                if (candidateCount < 3)
+                foreach (var jobPosition in activeJobPositions)
                 {
-                    LogHelper.Logger.Warn($"JobPosition '{jobPosition.Title}' (ID: {jobPosition.Id}) has only {candidateCount} candidates in the last 7 days");
+                    var candidateCount = _candidateRepository.Count(c =>
+                        c.JobPositionId == jobPosition.Id &&
+                        c.CreationTime >= sevenDaysAgo);
+
+                    if (candidateCount < 3)
+                    {
+                        Logger.Warn(
+                            $"JobPosition '{jobPosition.Title}' (ID: {jobPosition.Id}) " +
+                            $"has only {candidateCount} candidates in the last 7 days"
+                        );
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error in JobPositionCandidateCheckerJob: " + ex.Message, ex);
+                throw;
             }
         }
     }

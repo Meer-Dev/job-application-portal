@@ -47,6 +47,8 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,6 +90,7 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
   ],
   imports: [
     CommonModule,
+    NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -97,6 +100,7 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
     CollapseModule,
     TabsModule,
     AppRoutingModule,
+    SharedModule,
     ServiceProxyModule,
     SharedModule,
     NgxPaginationModule,

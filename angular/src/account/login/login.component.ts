@@ -32,7 +32,20 @@ export class LoginComponent extends AppComponentBase {
   }
 
   login(): void {
+    console.log('Login form values:', {
+        username: this.authService.authenticateModel.userNameOrEmailAddress,
+        password: this.authService.authenticateModel.password ? '***' : 'empty',
+        rememberMe: this.authService.rememberMe
+    });
+
+    if (!this.authService.authenticateModel.userNameOrEmailAddress || 
+        !this.authService.authenticateModel.password) {
+        abp.message.error('Please enter username and password');
+        return;
+    }
+
     this.submitting = true;
+    abp.multiTenancy.setTenantIdCookie(null);
     this.authService.authenticate(() => (this.submitting = false));
-  }
+}
 }

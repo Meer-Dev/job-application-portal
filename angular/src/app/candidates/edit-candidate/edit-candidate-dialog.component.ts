@@ -38,10 +38,9 @@ candidateForm: any;
   }
 
   loadJobPositions(): void {
-    this._jobPositionService
-      .getAll(undefined, true, 0, 1000)
+    this._jobPositionService.getAll(undefined, 0, 1000)
       .subscribe((result: JobPositionDtoPagedResultDto) => {
-        this.jobPositions = result.items;
+        this.jobPositions = result.items.slice(0, 1000);
       });
   }
 

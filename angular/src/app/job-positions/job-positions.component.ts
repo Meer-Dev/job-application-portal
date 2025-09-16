@@ -59,13 +59,11 @@ export class JobPositionsComponent extends PagedListingComponentBase<JobPosition
     request.keyword = this.keyword;
     request.isActive = this.isActive;
 
-    this._jobPositionService
-      .getAll(
-        request.keyword,
-        request.isActive,
-        request.skipCount,
-        request.maxResultCount
-      )
+    this._jobPositionService.getAll(
+  request.keyword,
+  request.skipCount,
+  request.maxResultCount
+)
       .pipe(
         finalize(() => {
           finishedCallback();
